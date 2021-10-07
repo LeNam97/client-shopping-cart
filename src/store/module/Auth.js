@@ -68,7 +68,7 @@ const actions = {
     vuexContext.commit('CLEAR_TOKEN')
     vuexContext.commit('CHECK_LOGIN', true)
   },
-  initialState (vuexContext) {
+  async initialState (vuexContext) {
     const token = localStorage.getItem('token')
     if (token) {
       console.log('init true')
@@ -78,8 +78,8 @@ const actions = {
         vuexContext.commit('SET_USER_ACCOUNT', result.data.email)
       })
       vuexContext.commit('CHECK_LOGIN', false)
-      vuexContext.commit('SET_PRODUCT')
-      vuexContext.commit('SET_LIST_CART')
+      await vuexContext.commit('SET_PRODUCT')
+      await vuexContext.commit('SET_LIST_CART')
       vuexContext.commit('SET_MONEY')
     } else {
       vuexContext.commit('CHECK_LOGIN', true)

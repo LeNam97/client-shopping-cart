@@ -41,18 +41,29 @@ const mutations = {
     })
     state.listCarts = []
   },
-  SET_LIST_CART (state) {
-    return new Promise((resolve) => {
-      console.log('SET_LIST_CART')
-      return api.getCarts().then(result => {
+  async SET_LIST_CART (state) {
+    try {
+      await api.getCarts().then(result => {
         if (result.data === null) {
           state.listCarts = []
         } else {
           state.listCarts = result.data.productItem
         }
-        resolve(state.listCarts)
       })
-    })
+    } catch (err) {
+      return err
+    }
+    // return new Promise((resolve) => {
+    //   console.log('SET_LIST_CART')
+    //   return api.getCarts().then(result => {
+    //     if (result.data === null) {
+    //       state.listCarts = []
+    //     } else {
+    //       state.listCarts = result.data.productItem
+    //     }
+    //     resolve(state.listCarts)
+    //   })
+    // })
   }
 }
 const actions = {

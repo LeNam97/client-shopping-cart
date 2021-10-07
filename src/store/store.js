@@ -59,20 +59,32 @@ export const store = new Vuex.Store({
       let item = state.Cart.listCarts.indexOf(payload);
       return state.Cart.listCarts.splice(item, 1);
     },
-    SET_MONEY (state) {
-      return new Promise(resolve => {
+    async SET_MONEY (state) {
+      try {
+        console.log('SET_MONEY')
         let sumMoney = 0;
-        state.Cart.listCarts.forEach(data => {
-            console.log('data', data.id)
-            let item = state.Product.listProducts.find(item => item._id === data.id);
-            console.log('item', item.price)
-            sumMoney += data.quantity * item.price;
-            console.log('set data money', sumMoney)
-            console.log(sumMoney)
+        console.log('cart list on set money', JSON.stringify(state.Cart.listCarts))
+        await state.Cart.listCarts.forEach(data => {
+          let item = state.Product.listProducts.find(item => item._id === data.id);
+          sumMoney += data.quantity * item.price;
+          console.log(sumMoney)
         })
         state.money = sumMoney
-        resolve(state.money)
-      })
+      } catch (err) {
+        return err
+      }
+
+      // return new Promise(resolve => {
+      //   let sumMoney = 0;
+      //   console.log('cart list on set money', JSON.stringify(state.Cart.listCarts))
+      //   state.Cart.listCarts.forEach(data => {
+      //       let item = state.Product.listProducts.find(item => item._id === data.id);
+      //       sumMoney += data.quantity * item.price;
+      //       console.log(sumMoney)
+      //   })
+      //   state.money = sumMoney
+      //   resolve(state.money)
+      // })
     }
 
   },

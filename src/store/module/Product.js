@@ -15,18 +15,29 @@ const getters = {
   },
 }
 const mutations = {
-  SET_PRODUCT (state) {
-    return new Promise(resolve => {
-      console.log('SET_PRODUCT')
-      api.getProducts().then(result => {
+  async SET_PRODUCT (state) {
+    try {
+      await api.getProducts().then(result => {
         if (result.data !== null) {
           return state.listProducts = result.data
         } else {
           return state.listProducts = []
         }
       })
-      resolve(state.listProducts)
-    })
+    } catch (err) {
+      return err
+    }
+    // return new Promise(resolve => {
+    //   console.log('SET_PRODUCT')
+    //   api.getProducts().then(result => {
+    //     if (result.data !== null) {
+    //       return state.listProducts = result.data
+    //     } else {
+    //       return state.listProducts = []
+    //     }
+    //   })
+    //   resolve(state.listProducts)
+    // })
   },
 }
 const actions = {}
