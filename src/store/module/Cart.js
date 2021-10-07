@@ -19,12 +19,14 @@ const getters = {
   },
 }
 const mutations = {
-  updateQuantity (state, payload) {
-    return state.listCarts.forEach(item => {
+  async UPDATE_QUANTITY (state, payload) {
+    const list = [...state.listCarts]
+    list.forEach(item => {
       if (item.id === payload.id) {
         item.quantity = payload.quantity;
       }
     })
+    return state.listCarts = list
   },
   SAVE_CARTS (state) {
     const data = []
@@ -67,8 +69,8 @@ const mutations = {
   }
 }
 const actions = {
-  updateQuantity ({commit}, payload) {
-    commit('updateQuantity', payload);
+  updateQuantity (vuexContext, payload) {
+    vuexContext.commit('UPDATE_QUANTITY', payload);
   },
   saveCart (vuexContext) {
     vuexContext.commit('SAVE_CARTS')
